@@ -1,0 +1,248 @@
+import java.util.*;
+
+public class Main {
+    static Scanner sc = new Scanner(System.in);
+    static Random rand = new Random();
+
+    public static void main(String[] args) {
+        while (true) {
+            System.out.println("\n==== MENU ====");
+            System.out.println("1. Tablica 10 liczb [-10,10] - min, max, średnia itd.");
+            System.out.println("2. Tablica 20 liczb [1,10] - zliczanie wystąpień");
+            System.out.println("3. Macierz 5x5 - min/max kolumn");
+            System.out.println("4. Reprezentacja binarna (ZM)");
+            System.out.println("5. Kody ZM, ZU1, ZU2");
+            System.out.println("6. Dodawanie i odejmowanie w ZU2 (8-bit)");
+            System.out.println("7. Macierz liczb względnie pierwszych (true/false → + / .)");
+            System.out.println("0. Wyjście");
+            System.out.print("Wybierz zadanie: ");
+
+            int wybor = sc.nextInt();
+            switch (wybor) {
+                case 1 -> zad1();
+                case 2 -> zad2();
+                case 3 -> zad3();
+                case 4 -> zad4();
+                case 5 -> zad5();
+                case 6 -> zad6();
+                case 7 -> zad7();
+                case 0 -> { System.out.println("Koniec programu."); return; }
+                default -> System.out.println("Nieprawidłowy wybór!");
+            }
+        }
+    }
+
+    // ---------------- ZADANIE 1 ----------------
+    static void zad1() {
+        int[] tab = new int[10];
+        for (int i = 0; i < tab.length; i++)
+            tab[i] = rand.nextInt(21) - 10;
+
+        System.out.print("Wylosowane liczby: ");
+        for (int x : tab) System.out.print(x + " ");
+        System.out.println();
+
+        int min = tab[0], max = tab[0], suma = 0;
+        for (int x : tab) {
+            if (x < min) min = x;
+            if (x > max) max = x;
+            suma += x;
+        }
+
+        double srednia = (double) suma / tab.length;
+        int mniejsze = 0, wieksze = 0;
+        for (int x : tab) {
+            if (x < srednia) mniejsze++;
+            else if (x > srednia) wieksze++;
+        }
+
+        System.out.println("Min: " + min + ", max: " + max);
+        System.out.printf("Średnia: %.2f%n", srednia);
+        System.out.println("Mniejszych od śr.: " + mniejsze);
+        System.out.println("Większych od śr.: " + wieksze);
+
+        System.out.print("Liczby w odwrotnej kolejności: ");
+        for (int i = tab.length - 1; i >= 0; i--) System.out.print(tab[i] + " ");
+        System.out.println();
+    }
+
+    // ---------------- ZADANIE 2 ----------------
+    static void zad2() {
+        int[] tab = new int[20];
+        int[] licznik = new int[11];
+        System.out.print("Wylosowane liczby: ");
+        for (int i = 0; i < tab.length; i++) {
+            tab[i] = rand.nextInt(10) + 1;
+            licznik[tab[i]]++;
+            System.out.print(tab[i] + " ");
+        }
+
+        System.out.println("\nWystąpienia:");
+        for (int i = 1; i <= 10; i++)
+            System.out.println(i + " - " + licznik[i]);
+    }
+
+    // ---------------- ZADANIE 3 ----------------
+    static void zad3() {
+        int[][] macierz = new int[5][5];
+        int[] minKol = new int[5];
+        int[] maxKol = new int[5];
+        Arrays.fill(minKol, Integer.MAX_VALUE);
+        Arrays.fill(maxKol, Integer.MIN_VALUE);
+
+        System.out.println("Macierz:");
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                macierz[i][j] = rand.nextInt(11) - 5;
+                System.out.printf("%3d", macierz[i][j]);
+                if (macierz[i][j] < minKol[j]) minKol[j] = macierz[i][j];
+                if (macierz[i][j] > maxKol[j]) maxKol[j] = macierz[i][j];
+            }
+            System.out.println();
+        }
+
+        System.out.print("Minima kolumn: ");
+        for (int x : minKol) System.out.printf("%3d", x);
+        System.out.println();
+
+        System.out.print("Maksima kolumn: ");
+        for (int x : maxKol) System.out.printf("%3d", x);
+        System.out.println();
+    }
+
+    // ---------------- ZADANIE 4 ----------------
+    static void zad4() {
+        int[] bity = new int[32];
+        System.out.print("Podaj liczbę całkowitą: ");
+        int liczba = sc.nextInt();
+        boolean ujemna = liczba < 0;
+        int wartosc = Math.abs(liczba);
+        int i = 0;
+        while (wartosc > 0 && i < 31) {
+            bity[i++] = wartosc % 2;
+            wartosc /= 2;
+        }
+
+        System.out.print("Liczba " + liczba + " binarnie (ZM): ");
+        System.out.print(ujemna ? "1." : "0.");
+        for (int j = i - 1; j >= 0; j--) System.out.print(bity[j]);
+        System.out.println();
+    }
+
+    // ---------------- ZADANIE 5 ----------------
+    static void zad5() {
+        int[] bity = new int[8];
+        System.out.print("Podaj liczbę całkowitą (-127..127): ");
+        int liczba = sc.nextInt();
+        boolean ujemna = liczba < 0;
+        int wartosc = Math.abs(liczba);
+        int i = 0;
+
+        while (wartosc > 0 && i < 7) {
+            bity[i++] = wartosc % 2;
+            wartosc /= 2;
+        }
+
+        // --- ZM ---
+        System.out.print("ZM: " + (ujemna ? "1." : "0."));
+        for (int j = 6; j >= 0; j--) System.out.print(bity[j]);
+        System.out.println();
+
+        // --- ZU1 ---
+        System.out.print("ZU1: " + (ujemna ? "1." : "0."));
+        for (int j = 6; j >= 0; j--)
+            System.out.print(ujemna ? (bity[j] == 0 ? 1 : 0) : bity[j]);
+        System.out.println();
+
+        // --- ZU2 ---
+        if (ujemna) {
+            int carry = 1;
+            for (int j = 0; j < 7; j++) {
+                bity[j] = (bity[j] == 0 ? 1 : 0);
+                if (carry == 1) {
+                    if (bity[j] == 0) {
+                        bity[j] = 1;
+                        carry = 0;
+                    } else {
+                        bity[j] = 0;
+                        carry = 1;
+                    }
+                }
+            }
+        }
+
+        System.out.print("ZU2: " + (ujemna ? "1." : "0."));
+        for (int j = 6; j >= 0; j--) System.out.print(bity[j]);
+        System.out.println();
+    }
+
+    // ---------------- ZADANIE 6 ----------------
+    static void zad6() {
+        System.out.print("Podaj pierwszą liczbę (-128..127): ");
+        int a = sc.nextInt();
+        System.out.print("Podaj drugą liczbę (-128..127): ");
+        int b = sc.nextInt();
+
+        int aZU2 = toZU2(a);
+        int bZU2 = toZU2(b);
+
+        int sumaZU2 = (aZU2 + bZU2) % 256;
+        int roznicaZU2 = (aZU2 - bZU2 + 256) % 256;
+
+        System.out.println("Dodawanie w ZU2: " + a + " + " + b + " = " + fromZU2(sumaZU2));
+        System.out.println("Odejmowanie w ZU2: " + a + " - " + b + " = " + fromZU2(roznicaZU2));
+    }
+
+    static int toZU2(int n) {
+        if (n >= 0) return n;
+        return 256 + n; // 8-bitowy zakres
+    }
+
+    static int fromZU2(int n) {
+        if (n < 128) return n;
+        return n - 256;
+    }
+
+    // ---------------- ZADANIE 7 ----------------
+    static void zad7() {
+        System.out.print("Podaj liczbę (>0): ");
+        int n = sc.nextInt();
+        if (n <= 0) {
+            System.out.println("Liczba musi być dodatnia!");
+            return;
+        }
+
+        boolean[][] a = new boolean[n][n];
+
+        // Wypełnianie tablicy
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                a[i][j] = gcd(i + 1, j + 1) == 1;
+            }
+        }
+
+        // Nagłówek
+        System.out.print("    ");
+        for (int j = 1; j <= n; j++) System.out.printf("%2d", j);
+        System.out.println();
+
+        // Wiersze
+        for (int i = 0; i < n; i++) {
+            System.out.printf("%2d ", i + 1);
+            for (int j = 0; j < n; j++) {
+                System.out.print(a[i][j] ? " +" : " .");
+            }
+            System.out.println();
+        }
+    }
+
+    // Algorytm Euklidesa do NWD
+    static int gcd(int a, int b) {
+        while (b != 0) {
+            int temp = b;
+            b = a % b;
+            a = temp;
+        }
+        return a;
+    }
+}
