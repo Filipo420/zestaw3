@@ -1,0 +1,146 @@
+/* zad1
+import java.util.Scanner;
+
+public class LastCharacterCount {
+public static void main(String[] args) {
+Scanner scanner = new Scanner(System.in);
+System.out.print("Podaj ciąg znaków: ");
+String input = scanner.nextLine();
+
+char lastChar = input.charAt(input.length() - 1);
+int count = 0;
+
+for (int i = 0; i < input.length(); i++) {
+if (input.charAt(i) == lastChar) {
+count++;
+}
+}
+
+System.out.println("Ostatni znak '" + lastChar + "' występuje " + count + " razy.");
+}
+}
+
+zad2
+import java.util.Scanner;
+
+public class ReverseString {
+public static void main(String[] args) {
+Scanner scanner = new Scanner(System.in);
+System.out.print("Podaj ciąg znaków: ");
+String input = scanner.nextLine();
+
+String reversed = new StringBuilder(input).reverse().toString();
+
+System.out.println("Odwrócony ciąg: " + reversed);
+}
+}
+
+zad3
+import java.util.Scanner;
+
+public class PalindromeCheck {
+public static void main(String[] args) {
+Scanner scanner = new Scanner(System.in);
+System.out.print("Podaj ciąg znaków: ");
+String input = scanner.nextLine();
+
+String reversed = new StringBuilder(input).reverse().toString();
+
+if (input.equals(reversed)) {
+System.out.println("Ciąg jest palindromem.");
+} else {
+System.out.println("Ciąg nie jest palindromem.");
+}
+}
+}
+
+zad4
+import java.util.Scanner;
+
+public class SumDigits {
+public static void main(String[] args) {
+Scanner scanner = new Scanner(System.in);
+System.out.print("Podaj tekst: ");
+String input = scanner.nextLine();
+
+int sum = 0;
+
+for (char c : input.toCharArray()) {
+if (Character.isDigit(c)) {
+sum += c - '0'; // konwertowanie znaku na cyfrę
+}
+}
+
+System.out.println("Suma cyfr: " + sum);
+}
+}
+
+zad5
+import java.util.Scanner;
+import java.util.Stack;
+
+public class ParenthesesCheck {
+public static void main(String[] args) {
+Scanner scanner = new Scanner(System.in);
+System.out.print("Podaj wyrażenie arytmetyczne: ");
+String expression = scanner.nextLine();
+
+if (isValidParentheses(expression)) {
+System.out.println("OK");
+} else {
+System.out.println("Błędne sparowanie nawiasów");
+}
+}
+
+public static boolean isValidParentheses(String expression) {
+Stack stack = new Stack<>();
+
+for (char c : expression.toCharArray()) {
+if (c == '(') {
+stack.push(c);
+} else if (c == ')') {
+if (stack.isEmpty()) {
+return false;
+}
+stack.pop();
+}
+}
+
+return stack.isEmpty();
+}
+}
+
+zad6
+import java.util.Scanner;
+
+public class CaesarCipher {
+public static void main(String[] args) {
+Scanner scanner = new Scanner(System.in);
+
+System.out.print("Podaj łańcuch znaków do zaszyfrowania: ");
+String input = scanner.nextLine();
+
+System.out.print("Podaj przesunięcie: ");
+int shift = scanner.nextInt();
+
+String encryptedText = encrypt(input, shift);
+System.out.println("Zaszyfrowany tekst: " + encryptedText);
+}
+
+public static String encrypt(String text, int shift) {
+StringBuilder encrypted = new StringBuilder();
+
+for (char c : text.toCharArray()) {
+if (c >= 'a' && c <= 'z') {
+
+char encryptedChar = (char) ((c - 'a' + shift + 26) % 26 + 'a');
+encrypted.append(encryptedChar);
+} else {
+
+encrypted.append(c);
+}
+}
+
+return encrypted.toString();
+}
+} */
